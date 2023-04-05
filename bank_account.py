@@ -38,7 +38,6 @@ class Bank_Account():
       for i in cls.all_instances:
         print(i.display_account_info())
 
-
 david = Bank_Account(.5, 10000)
 tyler = Bank_Account(0.5, 20000)
 
@@ -48,3 +47,38 @@ Bank_Account.print_instances()
 david.deposit(100).deposit(1000).deposit(100).withdraw(200).yield_interest().display_account_info()
 tyler.deposit(200).deposit(200).withdraw(50).withdraw(50).withdraw(20).withdraw(20).yield_interest().display_account_info()
   
+  
+class User:
+    def __init__(self, name, email):
+        self.name = name
+        self.email = email
+        self.accounts = [Bank_Account(int_rate=0.02, balance=0)]  # added this line
+
+    @classmethod
+    def account(self):
+        return self.accounts[0]
+
+    def make_deposit(self, amount):
+        if len(self.accounts) == 1:
+            self.account.deposit(amount)
+        else:
+            for account in self.accounts:
+                print("{:<30}${:>30}".format(account.name, account.balance))
+            index = False
+            while index is False:
+                selector = input("Please type the name of the account you'd like to deposit to:\n")
+                try:
+                    index = [account.name for account in self.accounts].index(selector)
+                except ValueError:
+                    print("try again")
+
+            return self.accounts[index].deposit(amount)
+
+    def make_withdrawal(self, amount):
+        self.accounts[0].withdraw(amount)
+
+
+samuel = User(name='Samuel L Jackson', email="lebromt@yuh.com")
+samuel.make_deposit(55)
+samuel.accounts.append(Bank_Account(int_rate=7.8, balance=77, name="Hector"))
+samuel.make_deposit(33)
